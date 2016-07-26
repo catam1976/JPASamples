@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>JPASampler</name>
+
+	<groupId>ro.clovertech.articles.jpa</groupId>
+	<artifactId>jpa-issues</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<packaging>jar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/META-INF</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/tools/orm/${persistence.xml.path}</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> <version>2.3.2</version> </dependency> -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.192</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<profiles>
+
+		<!-- JPA-Hibernate provider -->
+		<profile>
+			<id>hibernate</id>
+			<activation>
+				<property>
+					<name>jpa.provider</name>
+					<value>hibernate</value>
+				</property>
+			</activation>
+
+			<properties>
+				<persistence.xml.path>hibernate</persistence.xml.path>
+			</properties>
+
+			<dependencies>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+					<version>5.2.4.Final</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+					<version>5.2.1.Final</version>
+				</dependency>
+			</dependencies>
+
+		</profile>
+
+		<!-- JPA-EclipseLink provider -->
+		<profile>
+			<id>eclipseLink</id>
+			<activation>
+				<property>
+					<name>jpa.provider</name>
+					<value>eclipseLink</value>
+				</property>
+			</activation>
+
+			<properties>
+				<persistence.xml.path>eclipseLink</persistence.xml.path>
+			</properties>
+
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.persistence</groupId>
+					<artifactId>eclipselink</artifactId>
+					<version>2.6.3</version>
+				</dependency>
+			</dependencies>
+
+		</profile>
+
+
+	</profiles>
+
+
+</project>
