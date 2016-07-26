@@ -7,7 +7,7 @@ Provider specific JPA persistence.xml files are located into:
   - EclipseLink -> /tools/orm/eclipseLink/persistence.xml
   - Hibernate   -> /tools/orm/hibernate/persistence.xml
   
-To buid-it, just open a terminal and run:
+To buid-it, be sure you have JDK 8 / Maven 3 properly configured; then, just open a terminal and run:
 
 
 Hibernate version:
