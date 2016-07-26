@@ -14,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,6 +36,9 @@ public class Item implements Serializable {
     private Long id;
 
     private String name;
+    
+    @OneToMany(mappedBy = "item")
+    private List<Bid> bids;
 
     @Lob
     private String description;
@@ -108,5 +112,16 @@ public class Item implements Serializable {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+    public List<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
+    }
+    
+    
+    
 
 }
