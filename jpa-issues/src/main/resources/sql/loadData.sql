@@ -38,7 +38,7 @@ insert into categories (id, creation_date, description, name, parent_category) v
 insert into categories (id, creation_date, description, name, parent_category) values (14,now(),'Men`s fashion description','Men`s fashion',12);
 insert into categories (id, creation_date, description, name, parent_category) values (15,now(),'Kid`s fashion description','Kid`s fashion',12);
 insert into categories (id, creation_date, description, name, parent_category) values (16,now(),'Drones','Drones',7);
-insert into categories (id, creation_date, description, name, parent_category) values (17,now(),'Electrical vehicle','Electrical vehicle',8);
+
 
 insert into items (id, description, start_date, initial_price, name, end_date) values (1, 'The publication of Darwin`s The Origin of Species in 1859 marked a dramatic turning point in scientific thought. The volume had taken Darwin more than twenty years to publish, in part because he envisioned the storm of controversy it was certain to unleash. ', PARSEDATETIME('12-06-2016', 'dd-MM-yyyy'), 6, 'The Origin of Species', PARSEDATETIME('12-05-2016', 'dd-MM-yyyy'));
 insert into items (id, description, start_date, initial_price, name, end_date) values (2, 'As a Part-time PI and fulltime grim reaper, Charley Davidson has asked a lot of questions throughout her life: Why can I see dead people? Who is the hot supernatural entity following me? How do I get gum out of my sister`s hair before she wakes up? ', PARSEDATETIME('12-06-2017', 'dd-MM-yyyy'), 12, 'The Curse of Tenth Grave', PARSEDATETIME('10-05-2016', 'dd-MM-yyyy'));
@@ -69,8 +69,13 @@ insert into items (id, description, start_date, initial_price, name, end_date) v
 
 
 insert into items_categories (category_id, item_id) values(3, 1);
-insert into items_categories (category_id, item_id) values(5, 2);
+insert into items_categories (category_id, item_id) values(3, 2);
 insert into items_categories (category_id, item_id) values(3, 3);
+
+insert into items_categories (category_id, item_id) values(5, 1);
+insert into items_categories (category_id, item_id) values(5, 2);
+insert into items_categories (category_id, item_id) values(5, 3);
+
 insert into items_categories (category_id, item_id) values(16, 4);
 insert into items_categories (category_id, item_id) values(16, 5);
 insert into items_categories (category_id, item_id) values(11, 6);

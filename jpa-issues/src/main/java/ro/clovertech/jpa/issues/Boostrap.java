@@ -3,6 +3,7 @@ package ro.clovertech.jpa.issues;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,6 +28,8 @@ public abstract class Boostrap {
         DEMOS = new HashMap<>();
 
         DEMOS.put("doNPlus1FirstCase", Boostrap::doNPlus1FirstCase);
+        DEMOS.put("doNPlus1SecondCase", Boostrap::doNPlus1SecondCase);
+        DEMOS.put("doNPlus1FirstCaseSolution", Boostrap::doNPlus1FirstCaseSolution);
     }
 
     /**
@@ -74,7 +77,7 @@ public abstract class Boostrap {
         StringBuilder sb = new StringBuilder();
 
         for (Item item : items) {
-            sb.append("Item name: ").append(item.getName()).append("; categories: ");
+            sb.append("Item: [").append(item.getName()).append("/").append(item.getId()).append("]; categories: ");
 
             for (Category category : item.getCategories()) {
                 sb.append("[").append(category.getName()).append("]");
@@ -82,5 +85,51 @@ public abstract class Boostrap {
 
             sb.append("\n");
         }
+
+        LOGGER.info(sb.toString());
     }
+
+    /**
+     * N + 1 demo - 2nd case
+     * 
+     * @param entityManager
+     */
+    public static void doNPlus1SecondCase(EntityManager entityManager) {
+
+        List<Category> categories = entityManager.createQuery("SELECT c FROM Category c", Category.class)
+                .getResultList();
+
+        LOGGER.info("There are " + categories.size() + " categories");
+
+    }
+
+    /**
+     * N + 1 demo - 1st case - solution
+     * 
+     * @param entityManager
+     */
+    public static void doNPlus1FirstCaseSolution(EntityManager entityManager) {
+        List<Item> items = entityManager.createQuery("SELECT i FROM Item i join fetch  i.categories c", Item.class)
+                .getResultList();
+
+        // eliminate duplicated items & merge categories:
+        items = items.stream().collect(Collectors.toMap(item -> item.getId(), item -> item, (item1, item2) -> item1))
+                .values().stream().collect(Collectors.toList());
+        
+        // gets item names and their categories:
+        StringBuilder sb = new StringBuilder();
+
+        for (Item item : items) {
+            sb.append("Item: [").append(item.getName()).append("/").append(item.getId()).append("]; categories: ");
+
+            for (Category category : item.getCategories()) {
+                sb.append("[").append(category.getName()).append("]");
+            }
+
+            sb.append("\n");
+        }
+
+        LOGGER.info(sb.toString());
+    }
+
 }

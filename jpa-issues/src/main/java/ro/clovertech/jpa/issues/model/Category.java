@@ -52,7 +52,7 @@ public class Category implements Serializable {
 
     @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
     private List<Category> subCategories;
-
+ 
     @ManyToMany
     @JoinTable(
             name = "items_categories",
